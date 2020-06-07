@@ -8,17 +8,29 @@
   </head>
   <body>
     <div class="container">
-        <div class="navbar">
-            <div class="logo flex"><h1>Logo</h1></div>
-            <div class="amount flex"><h2>40$</h2></div>
-            <div class="name flex"><h3>name</h3></div>
+      <div class="navbar">
+        <div class="logo flex"><h1>Logo</h1></div>
+        <div class="amount flex"><h2>40$</h2></div>
+        <div class="name flex">
+          <button class="signoutBtn">signout</button>
+          <h3>name</h3>
         </div>
-        <div class="transactionForm flex">
-            transaction form
-        </div>
-        <div class="transactionList flex">
-            transaction list
-        </div>
+      </div>
+      <div class="transactionForm flex">
+        <form class="transactionForm">
+          <input type="text" placeholder="title" class="title" />
+          <input type="text" placeholder="cost" class="cost" />
+          <select class="transactionType">
+            <option selected="selected" value="expense">Expense</option>
+            <option value="income">Income</option>
+          </select>
+          <input class="transactionAt" type="date">
+          <button type="submit">Add</button>
+        </form>
+      </div>
+      <div class="transactionList">
+         
+      </div>
     </div>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
