@@ -10,12 +10,24 @@ var uid = null;
 var transactionForm = document.querySelector(".transactionForm");
 
 var renderTransactions = (transactionArr) => {
-  transactionList.innerHTML = ""
+  //setting user current amout
+  finalCostCalculation(transactionArr);
+
+  //display all transactions
+  transactionList.innerHTML = "";
   transactionArr.forEach((transaction, index) => {
-    var { title, cost, transactionAt, transactionId } = transaction;
+    var {
+      title,
+      cost,
+      transactionAt,
+      transactionId,
+      transactionType,
+    } = transaction;
     transactionList.insertAdjacentHTML(
       "beforeend",
-      ` <div class="transactionListItem">
+      ` <div class='transactionListItem ${
+        transactionType === "income" ? "income" : "expense"
+      }'>
     <div class="renderIndex listItem">
       <h3>${++index}</h3>
     </div>
@@ -60,7 +72,7 @@ var transacionFormSubmission = async (e) => {
     if (title && cost && transactionType && transactionAt) {
       var transactionObj = {
         title,
-        cost,
+        cost: parseInt(cost),
         transactionType,
         transactionAt: new Date(transactionAt),
         transactionBy: uid,
@@ -77,12 +89,27 @@ var transacionFormSubmission = async (e) => {
   }
 };
 
+var finalCostCalculation = (transArr) => {
+  var amountDiv = document.querySelector(".amount h2");
+  var totalAmount = 0;
+  transArr.forEach((transaction) => {
+    var { cost, transactionType } = transaction;
+    if (transactionType === "income") {
+      totalAmount = totalAmount + cost;
+    } else {
+      totalAmount = totalAmount - cost;
+    }
+  });
+  console.log(totalAmount);
+  amountDiv.textContent = `${totalAmount}RS`;
+};
+
 var fetchTransactions = async (uid) => {
   var transactions = [];
   var query = await firestore
     .collection("transactions")
     .where("transactionBy", "==", uid)
-    .orderBy("transactionAt","desc")
+    .orderBy("transactionAt", "desc")
     .get();
   query.forEach((doc) => {
     transactions.push({ ...doc.data(), transactionId: doc.id });
@@ -102,11 +129,9 @@ auth.onAuthStateChanged(async (user) => {
     var userInfo = await fetchUserInfo(uid);
     //setting user info
     nameDiv.textContent = userInfo.fullName;
-    //render transactions
     //fetch users transactions
     var transactions = await fetchTransactions(uid);
     //render process
-    // console.log(transactions)
     renderTransactions(transactions);
   } else {
     location.assign("./index.html");

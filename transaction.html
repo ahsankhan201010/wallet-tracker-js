@@ -1,11 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Transaction Page</h1>
-</body>
+
+    <div class="transactionForm flex">
+      <form class="transactionForm">
+        <input type="text" placeholder="title" class="title" />
+        <input type="text" placeholder="cost" class="cost" />
+        <select class="transactionType">
+          <option selected="selected" value="expense">Expense</option>
+          <option value="income">Income</option>
+        </select>
+        <input class="transactionAt" type="date" />
+        <button type="submit">Edit</button>
+      </form>
+    </div>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-firestore.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyDa5Zse1eZ7loXs4Gx_qHOEi-ZnmWiWD7Y",
+        authDomain: "wallet-tracker-js.firebaseapp.com",
+        databaseURL: "https://wallet-tracker-js.firebaseio.com",
+        projectId: "wallet-tracker-js",
+        storageBucket: "wallet-tracker-js.appspot.com",
+        messagingSenderId: "943325422411",
+        appId: "1:943325422411:web:4d1bac9508e373212f7ece",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    <script src="./js/transaction.js"></script>
+  </body>
 </html>
